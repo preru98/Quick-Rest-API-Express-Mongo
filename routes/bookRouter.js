@@ -1,10 +1,19 @@
 const express = require('express');
+const Books = require('../models/book');
+
 const bookRouter = express.Router();
 
 bookRouter.route('/books')
     .get((req, res) => {
-    const result = {title : "1984", author : "George Orwell"};
-    res.json(result); 
+        Books.find({})
+            .then((allBooks) => {
+                res.json(allBooks);
+            })
+            .catch((err) => {
+                console.log(err);
+                res.send(err);
+            })
+        ;
     }
 );
 
